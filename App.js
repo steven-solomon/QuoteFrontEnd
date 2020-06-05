@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, View, Text, FlatList } from 'react-native';
 
-import { getDetails } from './stockService';
+import { getQuote } from './stockService';
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -12,7 +12,7 @@ export default function App() {
         style={styles.search}
         accessibilityLabel="Stock Search"
         onBlur={({nativeEvent: { text }}) => {
-          getDetails(text).then((data) => {
+          getQuote(text).then((data) => {
             // map data to key value pairs to render
             setData(Object.entries(data));
           })

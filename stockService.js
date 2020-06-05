@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // There is no unit test for this function since we already know how to test it
-export function getDetails(symbol) {
+export function getQuote(symbol) {
 const endpoint = `http://localhost:3000/quote?symbol=${symbol}`;
 
 return new Promise((resolve, reject) => {

@@ -3,7 +3,7 @@ import App from '../App';
 
 import { render, fireEvent, wait, act } from '@testing-library/react-native';
 
-import { getDetails } from '../stockService';
+import { getQuote } from '../stockService';
 
 jest.mock('../stockService');
 
@@ -13,7 +13,7 @@ describe('SearchView', () => {
     const data = {ask: 228.25}
     const { getByLabelText, findByLabelText, findByText } = render(<App />);
 
-    getDetails.mockImplementation(() => {
+    getQuote.mockImplementation(() => {
       return Promise.resolve(data)
     });
 
@@ -26,6 +26,6 @@ describe('SearchView', () => {
 
     expect(await findByLabelText('ask')).toBeTruthy();
 
-    expect(getDetails).toHaveBeenCalledWith(stockTicker);
+    expect(getQuote).toHaveBeenCalledWith(stockTicker);
   });
 });
