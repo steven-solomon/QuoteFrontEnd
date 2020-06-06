@@ -13,9 +13,7 @@ describe('SearchView', () => {
     const data = {ask: 228.25}
     const { getByLabelText, findByLabelText, findByText } = render(<App />);
 
-    getQuote.mockImplementation(() => {
-      return Promise.resolve(data)
-    });
+    getQuote.mockImplementation(() => Promise.resolve(data));
 
     const stockInput = getByLabelText('Stock Search');
 
