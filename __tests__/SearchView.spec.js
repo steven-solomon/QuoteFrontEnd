@@ -3,9 +3,9 @@ import App from '../App';
 
 import { render, fireEvent, wait, act } from '@testing-library/react-native';
 
-import { getQuote } from '../stockService';
+import { getQuote } from '../src/stockService';
 
-jest.mock('../stockService');
+jest.mock('../src/stockService');
 
 describe('SearchView', () => {
   it('displays stock that has been found', async () => {
