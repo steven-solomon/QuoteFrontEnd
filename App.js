@@ -6,10 +6,8 @@ import { getQuote } from './stockService';
 function Row({field, value}) {
   return (
     <View style={styles.row}>
-      <Text>
-        <Text>{field}:</Text>
-        <Text accessibilityLabel={field}>{value}</Text>
-      </Text>
+      <Text>{field}</Text>
+      <Text accessibilityLabel={field}>{value}</Text>
     </View>
   );
 }
@@ -46,9 +44,12 @@ export default function App() {
 
 const styles = StyleSheet.create({
   row: {
+    padding: 14,
     flex: 1,
     backgroundColor: '#fff',
     height: 44,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   search: {
     padding: 12,
