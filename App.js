@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View, Text, FlatList } from 'react-native';
+import { StyleSheet, TextInput, View, Text, FlatList, SafeAreaView } from 'react-native';
 
 import { getQuote } from './stockService';
+
+function Row({field, value}) {
+  return (
+    <View style={styles.row}>
+      <Text>
+        <Text>{field}:</Text>
+        <Text accessibilityLabel={field}>{value}</Text>
+      </Text>
+    </View>
+  );
+}
 
 export default function App() {
   const [data, setData] = useState([]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TextInput
         style={styles.search}
         accessibilityLabel="Stock Search"
+        placeholder="Search for a stock"
         onBlur={({nativeEvent: { text }}) => {
           getQuote(text).then((data) => {
-            // map data to key value pairs to render
+            // map data to field value pairs to render
             setData(Object.entries(data));
           })
         }}
@@ -21,36 +33,35 @@ export default function App() {
       <FlatList
         data={data}
         renderItem={({item}) => {
-          const [key, value] = item;
+          const [field, value] = item;
           // nested Text components are treated as inline
-          return (
-            <View styles={styles.row}>
-              <Text>
-                <Text>{key}:</Text>
-                <Text accessibilityLabel={key}>{value}</Text>
-              </Text>
-            </View>
-          )
+          return (<Row field={field} value={value} />);
         }}
-        keyExtractor={([key, value]) => key}
+        keyExtractor={([field, value]) => field}
         extractData={data}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   row: {
+    flex: 1,
+    backgroundColor: '#fff',
+    height: 44,
   },
   search: {
+    padding: 12,
     backgroundColor: '#eee',
+    height: 44
   },
   container: {
+    paddingTop: 12,
     flex: 1,
-    paddingHorizontal: '1rem',
-    backgroundColor: '#fff',
+    paddingHorizontal: 1,
+    backgroundColor: '#1D3857',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'flex-start',
   },
 });
