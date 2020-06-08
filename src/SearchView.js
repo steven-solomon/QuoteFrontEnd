@@ -1,10 +1,20 @@
 import React, { useState } from 'react'
 import { getQuote } from './stockService'
 import { StyleSheet, TextInput, View, Text, FlatList, SafeAreaView } from 'react-native'
+import { TouchableHighlight } from 'react-native'
 
-function Row ({ symbol, description }) {
+function accessibilityLabel(symbol, description, selected) {
+  if (selected)
+    return `${symbol} ${description} selected`
+  else
+    return `${symbol} ${description}`
+}
+
+function Row ({ symbol, description, selected }) {
   return (
-    <View style={styles.row}>
+    <View
+      accessibilityLabel={accessibilityLabel(symbol, description, selected)}
+      style={[styles.row, selected && styles.selected]}>
       <Text>{symbol}</Text>
       <Text>{description}</Text>
     </View>
@@ -13,6 +23,7 @@ function Row ({ symbol, description }) {
 
 export default function SearchView () {
   const [data, setData] = useState([])
+  const [selected, setSelected] = useState(undefined)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -27,9 +38,16 @@ export default function SearchView () {
         }}
       />
       <FlatList
+        ItemSeparatorComponent={({ highlighted }) => (
+          <View style={[styles.separator, highlighted && { marginLeft: 0 }]}/>)}
         data={data}
-        renderItem={({ item: { symbol, description } }) => {
-          return (<Row symbol={symbol} description={description}/>)
+        renderItem={({ item, index, separators }) => {
+          const { symbol, description } = item
+          return (
+            <TouchableHighlight onPress={() => setSelected(symbol)}>
+              <Row symbol={symbol} description={description} selected={selected === symbol}/>
+            </TouchableHighlight>
+          )
         }}
         keyExtractor={({ symbol }) => symbol}
         extractData={data}
@@ -39,6 +57,9 @@ export default function SearchView () {
 }
 
 const styles = StyleSheet.create({
+  selected: {
+    backgroundColor: 'blue'
+  },
   row: {
     padding: 14,
     flex: 1,

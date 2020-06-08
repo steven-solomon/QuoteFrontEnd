@@ -1,7 +1,7 @@
 import React from 'react'
 import App from '../App'
 
-import { render, fireEvent } from '@testing-library/react-native'
+import { render, fireEvent, getByText } from '@testing-library/react-native'
 
 import { getQuote } from '../src/stockService'
 
@@ -11,7 +11,7 @@ describe('SearchView', () => {
   it('displays stock that has been found', async () => {
     const stockTicker = 'AAPL'
     const data = [{ 'symbol': 'AAPL', 'exchange': 'Q', 'type': 'stock', 'description': 'Apple Inc' }]
-    const { getByLabelText, findByText } = render(<App/>)
+    const { getByLabelText, findByLabelText } = render(<App/>)
 
     getQuote.mockImplementation(() => Promise.resolve(data))
 
@@ -22,9 +22,14 @@ describe('SearchView', () => {
     // blur needs text
     fireEvent(stockInput, new NativeTestEvent('blur', { nativeEvent: { text: stockTicker } }))
 
-    expect(await findByText('AAPL')).toBeTruthy()
-    expect(await findByText('Apple Inc')).toBeTruthy()
+    const tickerRow = await findByLabelText('AAPL Apple Inc')
+    expect(getByText(tickerRow, 'AAPL')).toBeTruthy()
+    expect(getByText(tickerRow, 'Apple Inc')).toBeTruthy()
 
     expect(getQuote).toHaveBeenCalledWith(stockTicker)
+
+    fireEvent.press(tickerRow)
+
+    expect(await findByLabelText('AAPL Apple Inc selected')).toBeTruthy()
   })
 })
