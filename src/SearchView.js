@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { getQuote } from './stockService';
-import { StyleSheet, TextInput, View, Text, FlatList, SafeAreaView } from 'react-native';
+import React, { useState } from 'react'
+import { getQuote } from './stockService'
+import { StyleSheet, TextInput, View, Text, FlatList, SafeAreaView } from 'react-native'
 
-function Row({field, value}) {
+function Row ({ symbol, description }) {
   return (
     <View style={styles.row}>
-      <Text>{field}</Text>
-      <Text accessibilityLabel={field}>{value}</Text>
+      <Text>{symbol}</Text>
+      <Text>{description}</Text>
     </View>
-  );
+  )
 }
 
-export default function SearchView() {
-  const [data, setData] = useState([]);
+export default function SearchView () {
+  const [data, setData] = useState([])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -20,25 +20,22 @@ export default function SearchView() {
         style={styles.search}
         accessibilityLabel="Stock Search"
         placeholder="Search for a stock"
-        onBlur={({nativeEvent: { text }}) => {
+        onBlur={({ nativeEvent: { text } }) => {
           getQuote(text).then((data) => {
-            // map data to field value pairs to render
-            setData(Object.entries(data));
+            setData(data)
           })
         }}
       />
       <FlatList
         data={data}
-        renderItem={({item}) => {
-          const [field, value] = item;
-          // nested Text components are treated as inline
-          return (<Row field={field} value={value} />);
+        renderItem={({ item: { symbol, description } }) => {
+          return (<Row symbol={symbol} description={description}/>)
         }}
-        keyExtractor={([field, value]) => field}
+        keyExtractor={({ symbol }) => symbol}
         extractData={data}
       />
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -64,4 +61,4 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'flex-start',
   },
-});
+})
