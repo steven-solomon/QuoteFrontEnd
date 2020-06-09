@@ -27,8 +27,10 @@ export function getExpiration(symbol) {
 }
 
 export function getOptionChain(symbol, expiration) {
-  return Promise.resolve([
-    {strike: 150.0, call: {ask: 124.0, bid: 115.0}, put: {ask: 121.0, bid: 100.0}},
-    {strike: 155.0, call: {ask: 124.0, bid: 115.0}, put: {ask: 121.0, bid: 100.0}},
-    ])
+  const endpoint = `http://localhost:3000/option_chain?symbol=${symbol}&expiration=${expiration}`
+
+  return new Promise((resolve, reject) => {
+    axios.get(endpoint).then((d) => resolve(d.data))
+      .catch((e) => reject('failed', e))
+  })
 }
