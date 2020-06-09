@@ -11,7 +11,9 @@
   "jest": {
     "preset": "@testing-library/react-native",
     "verbose": false,
-    "setupFiles": ["./node_modules/react-native-gesture-handler/jestSetup.js"],
+    "setupFiles": [
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
     }
@@ -29,6 +31,8 @@
     "react-native-reanimated": "^1.7.1",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.2.0",
+    "react-native-svg": "^12.1.0",
+    "react-native-svg-charts": "^5.4.0",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {
