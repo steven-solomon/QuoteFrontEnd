@@ -1,8 +1,9 @@
 import React from 'react'
-import { getNodeText, render } from '@testing-library/react-native'
-import {getHistoricalData} from '../src/stockService'
+import { act, findByLabelText, fireEvent, getNodeText, render } from '@testing-library/react-native'
+import { getHistoricalData } from '../src/stockService'
 
 import StockView from '../src/StockView'
+import { OptionExpirationViewName } from '../src/OptionExpirationView'
 
 jest.mock('../src/stockService')
 
@@ -11,20 +12,30 @@ describe('StockView', () => {
   const params = { symbol }
 
   it('displays symbol', () => {
-    getHistoricalData.mockImplementation(() => {})
+    getHistoricalData.mockImplementation(() => Promise.resolve([10]))
 
-    const {getByLabelText} = render(<StockView route={{params}} />)
+    const { getByLabelText } = render(<StockView route={{ params }}/>)
 
     expect(getNodeText(getByLabelText('symbol'))).toEqual(symbol)
   })
 
-  it('calls getHistoricalData', async () => {
+  it('calls getHistoricalData', () => {
     getHistoricalData.mockImplementation(() => Promise.resolve([10]))
 
-    const {findByLabelText} = render(<StockView route={{params}} />)
+    render(<StockView route={{ params }}/>)
 
-    expect(getHistoricalData).toHaveBeenCalledWith(symbol);
+    expect(getHistoricalData).toHaveBeenCalledWith(symbol)
+  })
 
-    expect(await findByLabelText('wibble')).toBeTruthy()
+  it('navigates to OptionExpirationView when action pressed', async () => {
+    getHistoricalData.mockImplementation(() => Promise.resolve([10]))
+
+    const fakeNavigation = { push: jest.fn() }
+
+    const { findByLabelText } = render(<StockView route={{ params }} navigation={fakeNavigation}/>)
+
+    fireEvent.press(await findByLabelText('Action now'))
+
+    expect(fakeNavigation.push).toHaveBeenCalledWith(OptionExpirationViewName, { symbol })
   })
 })
