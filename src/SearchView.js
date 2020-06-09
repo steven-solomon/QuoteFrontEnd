@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getQuote } from './stockService'
 import { StyleSheet, TextInput, View, Text, FlatList, SafeAreaView } from 'react-native'
 import { TouchableHighlight } from 'react-native'
-import { OptionExpirationViewName } from './OptionExpirationView'
+import { StockViewName } from './StockView'
 
 export const SearchViewName = "LookupStock"
 
@@ -55,7 +55,7 @@ export default function SearchView ({navigation}) {
           return (
             <TouchableHighlight onPress={() => {
               setSelected(symbol)
-              navigation.push(OptionExpirationViewName, {symbol: symbol})
+              navigation.push(StockViewName, {symbol: symbol})
             }}>
               <Row symbol={symbol} description={description} selected={selected === symbol}/>
             </TouchableHighlight>

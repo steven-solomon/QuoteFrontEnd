@@ -1,8 +1,8 @@
 import React from 'react'
-import { act, fireEvent, getByText as localizedGetByText, render } from '@testing-library/react-native'
+import { fireEvent, getByText as localizedGetByText, render } from '@testing-library/react-native'
 import { getQuote } from '../src/stockService'
 import SearchView from '../src/SearchView'
-import { OptionExpirationViewName } from '../src/OptionExpirationView'
+import { StockViewName } from '../src/StockView'
 
 jest.mock('../src/stockService')
 jest.mock('@react-navigation/native')
@@ -75,6 +75,6 @@ describe('SearchView', () => {
 
     fireEvent.press(tickerRow)
 
-    expect(mockNavigation.push).toHaveBeenCalledWith(OptionExpirationViewName, expect.objectContaining({ symbol: symbol }))
+    expect(mockNavigation.push).toHaveBeenCalledWith(StockViewName, expect.objectContaining({ symbol: symbol }))
   })
 })
