@@ -34,6 +34,6 @@ describe('SearchView', () => {
 
     expect(await findByLabelText('AAPL Apple Inc selected')).toBeTruthy()
 
-    expect(mockNavigation.push).toHaveBeenCalledWith('ChooseOptions')
+    expect(mockNavigation.push).toHaveBeenCalledWith('ChooseOptions', expect.objectContaining({ symbol: 'AAPL' }))
   })
 })

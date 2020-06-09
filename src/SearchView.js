@@ -48,7 +48,7 @@ export default function SearchView () {
           return (
             <TouchableHighlight onPress={() => {
               setSelected(symbol)
-              navigation.push('ChooseOptions')
+              navigation.push('ChooseOptions', {symbol: symbol})
             }}>
               <Row symbol={symbol} description={description} selected={selected === symbol}/>
             </TouchableHighlight>
