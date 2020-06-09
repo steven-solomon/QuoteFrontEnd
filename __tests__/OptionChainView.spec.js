@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render } from '@testing-library/react-native'
+import { getNodeText, render } from '@testing-library/react-native'
 import OptionChainView from '../src/OptionChainView'
 import { getOptionChain } from '../src/stockService'
 
@@ -23,12 +23,14 @@ describe('OptionChainView', () => {
 
     const { findByLabelText } = render(<OptionChainView route={{ params }}/>)
 
-    expect(await findByLabelText('strike 150.0')).toBeTruthy()
+    expect(getNodeText(await findByLabelText('strike 150.0'))).toEqual('150.0')
+    // expect(await findByLabelText('ask 124.0')).toBeTruthy()
+    // expect(await findByLabelText('bid 115.0')).toBeTruthy()
   })
 
   function optionChain () {
     return [
-      {strike: '150.0'}
+      {strike: 150.0, call: {ask: 124.0, bid: 115.0}}
     ]
   }
 })
