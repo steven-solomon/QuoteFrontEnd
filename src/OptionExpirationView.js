@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, SafeAreaView, FlatList, StyleSheet, TouchableHighlight } from 'react-native'
 import { getExpiration } from './stockService'
+import { OptionChainViewName } from './OptionChainView'
 
 export const OptionExpirationViewName = 'ChooseExpiration'
 
@@ -17,7 +18,7 @@ function Row({item, selected}) {
   )
 }
 
-export default function OptionExpirationView ({ route }) {
+export default function OptionExpirationView ({ route, navigation }) {
   const [selected, setSelected] = useState(undefined)
   const [expirationValues, setExpirationValues] = useState([])
   const { symbol } = route.params
@@ -37,6 +38,7 @@ export default function OptionExpirationView ({ route }) {
           return (
             <TouchableHighlight onPress={() => {
               setSelected(item)
+              navigation.push(OptionChainViewName, {symbol, expiration: item})
             }}>
               <Row item={item} selected={item === selected} />
             </TouchableHighlight>
