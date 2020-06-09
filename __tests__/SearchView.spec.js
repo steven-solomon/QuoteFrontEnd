@@ -9,8 +9,9 @@ jest.mock('@react-navigation/native')
 
 describe('SearchView', () => {
   it('displays stock that has been found', async () => {
-    const stockTicker = 'AAPL'
-    const data = [{ 'symbol': 'AAPL', 'exchange': 'Q', 'type': 'stock', 'description': 'Apple Inc' }]
+    const symbol = 'AAPL'
+    const description = 'Apple Inc'
+    const data = [{ 'symbol': symbol, 'exchange': 'Q', 'type': 'stock', 'description': description }]
     const { getByLabelText, findByLabelText } = render(<SearchView/>)
 
     getQuote.mockImplementation(() => Promise.resolve(data))
@@ -20,20 +21,20 @@ describe('SearchView', () => {
     const stockInput = getByLabelText('Stock Search')
 
     // fireEvent.changeText didn't seem to work here
-    fireEvent.change(stockInput, { nativeEvent: { text: stockTicker } })
+    fireEvent.change(stockInput, { nativeEvent: { text: symbol } })
     // blur needs text
-    fireEvent(stockInput, new NativeTestEvent('blur', { nativeEvent: { text: stockTicker } }))
+    fireEvent(stockInput, new NativeTestEvent('blur', { nativeEvent: { text: symbol } }))
 
     const tickerRow = await findByLabelText('AAPL Apple Inc')
-    expect(localizedGetByText(tickerRow, 'AAPL')).toBeTruthy()
-    expect(localizedGetByText(tickerRow, 'Apple Inc')).toBeTruthy()
+    expect(localizedGetByText(tickerRow, symbol)).toBeTruthy()
+    expect(localizedGetByText(tickerRow, description)).toBeTruthy()
 
-    expect(getQuote).toHaveBeenCalledWith(stockTicker)
+    expect(getQuote).toHaveBeenCalledWith(symbol)
 
     fireEvent.press(tickerRow)
 
     expect(await findByLabelText('AAPL Apple Inc selected')).toBeTruthy()
 
-    expect(mockNavigation.push).toHaveBeenCalledWith('ChooseOptions', expect.objectContaining({ symbol: 'AAPL' }))
+    expect(mockNavigation.push).toHaveBeenCalledWith('ChooseOptions', expect.objectContaining({ symbol: symbol }))
   })
 })
