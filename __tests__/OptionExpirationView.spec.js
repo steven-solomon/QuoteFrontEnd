@@ -14,6 +14,8 @@ describe('OptionExpirationView', () => {
 
     const { findByText } = render(<OptionExpirationView route={{ params }}/>)
 
-    expect(await findByText(expirationValues[0])).toBeTruthy()
+    for (const expirationValue of expirationValues) {
+      expect(await findByText(expirationValue)).toBeTruthy()
+    }
   })
 })
