@@ -24,7 +24,7 @@ describe('OptionChainView', () => {
     const { findByLabelText } = render(<OptionChainView route={{ params }}/>)
 
     expect(getNodeText(await findByLabelText('strike 150.0'))).toEqual('150.0')
-    // expect(await findByLabelText('ask 124.0')).toBeTruthy()
+    expect(getNodeText(await findByLabelText('call ask 124.0'))).toEqual('124.0')
     // expect(await findByLabelText('bid 115.0')).toBeTruthy()
   })
 

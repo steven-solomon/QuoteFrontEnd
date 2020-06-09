@@ -27,5 +27,5 @@ export function getExpiration(symbol) {
 }
 
 export function getOptionChain(symbol, expiration) {
-  return Promise.resolve([{}])
+  return Promise.resolve([{strike: 150.0}])
 }
