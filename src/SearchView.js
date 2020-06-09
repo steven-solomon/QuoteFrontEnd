@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { getQuote } from './stockService'
 import { StyleSheet, TextInput, View, Text, FlatList, SafeAreaView } from 'react-native'
 import { TouchableHighlight } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 import { OptionExpirationViewName } from './OptionExpirationView'
 
 export const SearchViewName = "LookupStock"
@@ -25,10 +24,15 @@ function Row ({ symbol, description, selected }) {
   )
 }
 
-export default function SearchView () {
+export default function SearchView ({navigation}) {
   const [data, setData] = useState([])
   const [selected, setSelected] = useState(undefined)
-  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      setSelected(undefined)
+    });
+  })
 
   return (
     <SafeAreaView style={styles.container}>

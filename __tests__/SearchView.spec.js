@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, getByText as localizedGetByText } from '@testing-library/react-native'
+import { render, fireEvent, getByText as localizedGetByText, act } from '@testing-library/react-native'
 import { useNavigation } from '@react-navigation/native'
 import { getQuote } from '../src/stockService'
 import SearchView from '../src/SearchView'
@@ -13,11 +13,11 @@ describe('SearchView', () => {
     const symbol = 'AAPL'
     const description = 'Apple Inc'
     const data = [{ 'symbol': symbol, 'exchange': 'Q', 'type': 'stock', 'description': description }]
-    const { getByLabelText, findByLabelText } = render(<SearchView/>)
+    const mockNavigation = { push: jest.fn(), addListener: jest.fn() }
+
+    const { getByLabelText, findByLabelText, queryByLabelText } = render(<SearchView navigation={mockNavigation}/>)
 
     getQuote.mockImplementation(() => Promise.resolve(data))
-    const mockNavigation = { push: jest.fn() }
-    useNavigation.mockImplementation(() => mockNavigation)
 
     const stockInput = getByLabelText('Stock Search')
 
@@ -37,5 +37,12 @@ describe('SearchView', () => {
     expect(await findByLabelText('AAPL Apple Inc selected')).toBeTruthy()
 
     expect(mockNavigation.push).toHaveBeenCalledWith(OptionExpirationViewName, expect.objectContaining({ symbol: symbol }))
+
+    const [event, callback] = mockNavigation.addListener.mock.calls[0]
+    expect(event).toEqual('focus')
+
+    act(() => callback())
+
+    expect(queryByLabelText('AAPL Apple Inc selected')).toBeFalsy()
   })
 })
