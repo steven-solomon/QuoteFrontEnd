@@ -10,10 +10,10 @@ describe('OptionExpirationView', () => {
   const symbol = 'AAPL'
   const expirationToSelect = '2020-06-12'
 
-  it('displays expiration values for symbol', async () => {
-    const expirationValues = [expirationToSelect, '2020-06-19', '2020-06-26']
-    const params = { symbol: symbol }
+  const expirationValues = [expirationToSelect, '2020-06-19', '2020-06-26']
+  const params = { symbol: symbol }
 
+  it('displays expiration values for symbol', async () => {
     const fakeNavigation = { push: jest.fn() }
 
     getExpiration.mockImplementation(() => Promise.resolve(expirationValues))
@@ -26,9 +26,6 @@ describe('OptionExpirationView', () => {
   })
 
   it('selects expiration row when pressed', async () => {
-    const expirationValues = [expirationToSelect, '2020-06-19', '2020-06-26']
-    const params = { symbol: symbol }
-
     const fakeNavigation = { push: jest.fn() }
 
     getExpiration.mockImplementation(() => Promise.resolve(expirationValues))
@@ -41,9 +38,6 @@ describe('OptionExpirationView', () => {
   })
 
   it('redirects to OptionChainView when expiration pressed', async () => {
-    const expirationValues = [expirationToSelect, '2020-06-19', '2020-06-26']
-    const params = { symbol: symbol }
-
     const fakeNavigation = { push: jest.fn() }
 
     getExpiration.mockImplementation(() => Promise.resolve(expirationValues))
