@@ -5,7 +5,7 @@ import { formatCurrency } from './formatCurrency'
 
 export const OptionChainViewName = 'OptionChainView'
 
-function Call({ask, bid}) {
+function Call ({ ask, bid }) {
   const formattedAsk = formatCurrency(ask)
   const formattedBid = formatCurrency(bid)
 
@@ -16,13 +16,24 @@ function Call({ask, bid}) {
     </>
   )
 }
-function Row ({ item: { strike, call: { ask, bid } } }) {
+
+function Put ({ask}) {
+  const formattedAsk = formatCurrency(ask)
+  return (
+    <>
+      <Text accessibilityLabel={`put ask ${formattedAsk}`}>{formattedAsk}</Text>
+    </>
+  )
+}
+
+function Row ({ item: { strike, call, put } }) {
   const formattedStrike = formatCurrency(strike)
 
   return (
     <View>
-      <Call ask={ask} bid={bid} />
+      <Call ask={call.ask} bid={call.bid}/>
       <Text accessibilityLabel={`strike ${formattedStrike}`}>{formattedStrike}</Text>
+      <Put ask={put.ask}/>
     </View>
   )
 }
