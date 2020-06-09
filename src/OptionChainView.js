@@ -22,9 +22,9 @@ function Row ({ item: { strike, call, put } }) {
 
   return (
     <View>
-      <Option type={"call"} ask={call.ask} bid={call.bid}/>
+      <Option type={'call'} ask={call.ask} bid={call.bid}/>
       <Text accessibilityLabel={`strike ${formattedStrike}`}>{formattedStrike}</Text>
-      <Option type={"put"} ask={put.ask} bid={put.bid}/>
+      <Option type={'put'} ask={put.ask} bid={put.bid}/>
     </View>
   )
 }
