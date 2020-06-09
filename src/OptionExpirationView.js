@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, FlatList, StyleSheet } from 'react-native'
+import { View, Text, SafeAreaView, FlatList, StyleSheet, TouchableHighlight } from 'react-native'
 import { getExpiration } from './stockService'
 
 export const OptionExpirationViewName = 'ChooseExpiration'
 
+function accessibilityLabel(item, selected) {
+  if (selected === item)
+    return `${item} selected`
+  else
+    return `${item}`
+}
+
 export default function OptionExpirationView ({ route }) {
+  const [selected, setSelected] = useState(undefined)
   const [expirationValues, setExpirationValues] = useState([])
   const { symbol } = route.params
 
@@ -20,7 +28,15 @@ export default function OptionExpirationView ({ route }) {
         data={expirationValues}
         keyExtractor={(date) => date}
         renderItem={(({ item }) => {
-          return <View style={styles.row}><Text>{item}</Text></View>
+          return (
+            <TouchableHighlight onPress={() => {
+              setSelected(item)
+            }}>
+              <View style={styles.row} accessibilityLabel={accessibilityLabel(item, selected)}>
+                <Text>{item}</Text>
+              </View>
+            </TouchableHighlight>
+          )
         })}
       />
     </SafeAreaView>
