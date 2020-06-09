@@ -23,15 +23,20 @@ function Option ({ type, ask, bid }) {
   )
 }
 
-function Row ({ item: { strike, call, put } }) {
+function Strike({ strike }) {
   const formattedStrike = formatCurrency(strike)
+  return (
+    <View style={styles.strike}>
+      <Text accessibilityLabel={`strike ${formattedStrike}`}>{formattedStrike}</Text>
+    </View>
+  )
+}
 
+function Row ({ item: { strike, call, put } }) {
   return (
     <View style={styles.row}>
       <Option type={'call'} ask={call.ask} bid={call.bid}/>
-      <View style={styles.strike}>
-        <Text accessibilityLabel={`strike ${formattedStrike}`}>{formattedStrike}</Text>
-      </View>
+      <Strike strike={strike} />
       <Option type={'put'} ask={put.ask} bid={put.bid}/>
     </View>
   )
