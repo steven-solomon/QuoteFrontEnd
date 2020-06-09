@@ -18,11 +18,10 @@ export default function OptionExpirationView ({ route }) {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={expirationValues}
+        keyExtractor={(date) => date}
         renderItem={(({ item }) => {
           return <View style={styles.row}><Text>{item}</Text></View>
         })}
-        data={expirationValues}
-        keyExtractor={(date) => date}
       />
     </SafeAreaView>
   )
