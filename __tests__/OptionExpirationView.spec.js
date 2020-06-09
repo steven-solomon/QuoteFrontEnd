@@ -19,7 +19,7 @@ describe('OptionExpirationView', () => {
     }
   })
 
-  it('redirects to OptionChainView when expiration selected', async () => {
+  it('selects expiration row when pressed', async () => {
     const expirationValues = ['2020-06-12', '2020-06-19', '2020-06-26']
     const params = { symbol: 'AAPL' }
 
