@@ -1,17 +1,22 @@
-import axios from 'axios';
+import axios from 'axios'
 
 // There is no unit test for this function since we already know how to test it
-export function getQuote(symbol) {
-const endpoint = `http://localhost:3000/quote?symbol=${symbol}`;
+export function getQuote (symbol) {
+  const endpoint = `http://localhost:3000/quote?symbol=${symbol}`
 
-return new Promise((resolve, reject) => {
-  axios.get(endpoint, {
-            mode: 'cors',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET',
-                'Access-Control-Allow-Headers': 'Origin'
-            }}).then((d) => resolve(d.data))
-            .catch((e) => reject('failed', e))
+  return new Promise((resolve, reject) => {
+    axios.get(endpoint, {
+      mode: 'cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Headers': 'Origin'
+      }
+    }).then((d) => resolve(d.data))
+      .catch((e) => reject('failed', e))
   })
+}
+
+export function getExpiration(symbol) {
+  return Promise.resolve(["2020-06-12","2020-06-19","2020-06-26"])
 }
