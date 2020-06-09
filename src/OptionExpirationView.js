@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#a9a9a9'
   },
   selected: {
     backgroundColor: 'blue'

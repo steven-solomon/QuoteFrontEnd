@@ -78,7 +78,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     height: 44,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: '#a9a9a9'
   },
   search: {
     padding: 12,
