@@ -5,6 +5,8 @@ import { TouchableHighlight } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { OptionExpirationViewName } from './OptionExpirationView'
 
+export const SearchViewName = "LookupStock"
+
 function accessibilityLabel(symbol, description, selected) {
   if (selected)
     return `${symbol} ${description} selected`
