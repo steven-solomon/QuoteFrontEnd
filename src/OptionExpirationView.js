@@ -5,10 +5,16 @@ import { getExpiration } from './stockService'
 export const OptionExpirationViewName = 'ChooseExpiration'
 
 function accessibilityLabel(item, selected) {
-  if (selected === item)
-    return `${item} selected`
-  else
-    return `${item}`
+  return selected ? `${item} selected` : `${item}`
+}
+
+function Row({item, selected}) {
+  return (
+    <View style={[styles.row, selected && styles.selected]}
+          accessibilityLabel={accessibilityLabel(item, selected)}>
+      <Text>{item}</Text>
+    </View>
+  )
 }
 
 export default function OptionExpirationView ({ route }) {
@@ -32,9 +38,7 @@ export default function OptionExpirationView ({ route }) {
             <TouchableHighlight onPress={() => {
               setSelected(item)
             }}>
-              <View style={styles.row} accessibilityLabel={accessibilityLabel(item, selected)}>
-                <Text>{item}</Text>
-              </View>
+              <Row item={item} selected={item === selected} />
             </TouchableHighlight>
           )
         })}
@@ -57,5 +61,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 12,
-  }
+  },
+  selected: {
+    backgroundColor: 'blue'
+  },
 })
