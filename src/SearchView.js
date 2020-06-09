@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { getQuote } from './stockService'
 import { StyleSheet, TextInput, View, Text, FlatList, SafeAreaView } from 'react-native'
 import { TouchableHighlight } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 function accessibilityLabel(symbol, description, selected) {
   if (selected)
@@ -24,6 +25,7 @@ function Row ({ symbol, description, selected }) {
 export default function SearchView () {
   const [data, setData] = useState([])
   const [selected, setSelected] = useState(undefined)
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,7 +46,10 @@ export default function SearchView () {
         renderItem={({ item, index, separators }) => {
           const { symbol, description } = item
           return (
-            <TouchableHighlight onPress={() => setSelected(symbol)}>
+            <TouchableHighlight onPress={() => {
+              setSelected(symbol)
+              navigation.push('ChooseOptions')
+            }}>
               <Row symbol={symbol} description={description} selected={selected === symbol}/>
             </TouchableHighlight>
           )
