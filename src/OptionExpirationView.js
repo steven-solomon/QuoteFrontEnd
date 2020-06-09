@@ -24,6 +24,9 @@ export default function OptionExpirationView ({ route, navigation }) {
   const { symbol } = route.params
 
   useEffect(() => {
+    navigation.addListener('focus', () => {
+      setSelected(undefined)
+    })
     getExpiration(symbol).then((data) => {
       setExpirationValues(data)
     })

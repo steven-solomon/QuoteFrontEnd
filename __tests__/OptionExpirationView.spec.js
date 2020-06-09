@@ -1,5 +1,5 @@
 import React from 'react'
-import { findByLabelText, fireEvent, render } from '@testing-library/react-native'
+import { act, findByLabelText, fireEvent, render } from '@testing-library/react-native'
 import OptionExpirationView from '../src/OptionExpirationView'
 import { OptionChainViewName } from '../src/OptionChainView'
 import { getExpiration } from '../src/stockService'
@@ -14,7 +14,7 @@ describe('OptionExpirationView', () => {
   const params = { symbol: symbol }
 
   it('displays expiration values for symbol', async () => {
-    const fakeNavigation = { push: jest.fn() }
+    const fakeNavigation = { push: jest.fn(), addListener: jest.fn() }
 
     getExpiration.mockImplementation(() => Promise.resolve(expirationValues))
 
@@ -26,7 +26,7 @@ describe('OptionExpirationView', () => {
   })
 
   it('selects expiration row when pressed', async () => {
-    const fakeNavigation = { push: jest.fn() }
+    const fakeNavigation = { push: jest.fn(), addListener: jest.fn() }
 
     getExpiration.mockImplementation(() => Promise.resolve(expirationValues))
 
@@ -38,7 +38,7 @@ describe('OptionExpirationView', () => {
   })
 
   it('redirects to OptionChainView when expiration pressed', async () => {
-    const fakeNavigation = { push: jest.fn() }
+    const fakeNavigation = { push: jest.fn(), addListener: jest.fn() }
 
     getExpiration.mockImplementation(() => Promise.resolve(expirationValues))
 
@@ -47,5 +47,21 @@ describe('OptionExpirationView', () => {
     fireEvent.press(await findByLabelText(expirationToSelect))
 
     expect(fakeNavigation.push).toHaveBeenCalledWith(OptionChainViewName, { symbol, expiration: expirationToSelect })
+  })
+
+  it('deselects expiration when view is focused',  async () => {
+    const fakeNavigation = { push: jest.fn(), addListener: jest.fn() }
+
+    getExpiration.mockImplementation(() => Promise.resolve(expirationValues))
+
+    const { findByLabelText } = render(<OptionExpirationView navigation={fakeNavigation} route={{ params }}/>)
+
+    fireEvent.press(await findByLabelText(expirationToSelect))
+
+    const [event, callback] = fakeNavigation.addListener.mock.calls[0]
+    expect(event).toEqual('focus')
+
+    act(() => callback())
+    fireEvent.press(await findByLabelText(expirationToSelect))
   })
 })
