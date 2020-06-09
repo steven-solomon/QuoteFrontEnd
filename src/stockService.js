@@ -18,5 +18,10 @@ export function getQuote (symbol) {
 }
 
 export function getExpiration(symbol) {
-  return Promise.resolve(["2020-06-12","2020-06-19","2020-06-26"])
+  const endpoint = `http://localhost:3000/expiration?symbol=${symbol}`
+
+  return new Promise((resolve, reject) => {
+    axios.get(endpoint).then((d) => resolve(d.data))
+      .catch((e) => reject('failed', e))
+  })
 }
