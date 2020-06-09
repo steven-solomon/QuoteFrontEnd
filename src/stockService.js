@@ -25,3 +25,7 @@ export function getExpiration(symbol) {
       .catch((e) => reject('failed', e))
   })
 }
+
+export function getOptionChain(symbol, expiration) {
+
+}
