@@ -17,11 +17,13 @@ function Call ({ ask, bid }) {
   )
 }
 
-function Put ({ask}) {
+function Put ({ask, bid}) {
   const formattedAsk = formatCurrency(ask)
+  const formattedBid = formatCurrency(bid)
   return (
     <>
       <Text accessibilityLabel={`put ask ${formattedAsk}`}>{formattedAsk}</Text>
+      <Text accessibilityLabel={`put bid ${formattedBid}`}>{formattedBid}</Text>
     </>
   )
 }
@@ -33,7 +35,7 @@ function Row ({ item: { strike, call, put } }) {
     <View>
       <Call ask={call.ask} bid={call.bid}/>
       <Text accessibilityLabel={`strike ${formattedStrike}`}>{formattedStrike}</Text>
-      <Put ask={put.ask}/>
+      <Put ask={put.ask} bid={put.bid}/>
     </View>
   )
 }
