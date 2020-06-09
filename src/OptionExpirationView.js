@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, SafeAreaView, FlatList } from 'react-native'
+import { View, Text, SafeAreaView, FlatList, StyleSheet } from 'react-native'
 import { getExpiration } from './stockService'
 
 export const OptionExpirationViewName = 'ChooseExpiration'
@@ -15,17 +15,32 @@ export default function OptionExpirationView ({ route }) {
   }, [])
 
   return (
-    <View>
-      <SafeAreaView>
-        <FlatList
-          data={expirationValues}
-          renderItem={(({ item }) => {
-            return <View><Text>{item}</Text></View>
-          })}
-          data={expirationValues}
-          keyExtractor={(date) => date}
-        />
-      </SafeAreaView>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={expirationValues}
+        renderItem={(({ item }) => {
+          return <View style={styles.row}><Text>{item}</Text></View>
+        })}
+        data={expirationValues}
+        keyExtractor={(date) => date}
+      />
+    </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1D3857',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent: 'flex-start'
+  },
+  row: {
+    backgroundColor: '#fff',
+    height: 44,
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  }
+})
