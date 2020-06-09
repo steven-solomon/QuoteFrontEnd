@@ -25,7 +25,7 @@ describe('OptionChainView', () => {
 
     expect(getNodeText(await findByLabelText('strike 150.0'))).toEqual('150.0')
     expect(getNodeText(await findByLabelText('call ask 124.0'))).toEqual('124.0')
-    // expect(await findByLabelText('bid 115.0')).toBeTruthy()
+    expect(getNodeText(await findByLabelText('call bid 115.0'))).toEqual('115.0')
   })
 
   function optionChain () {
