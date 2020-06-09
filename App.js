@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchView from './src/SearchView';
-import OptionChainView from './src/OptionChainView';
+import OptionExpirationView, { OptionExpirationViewName } from './src/OptionExpirationView'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -11,7 +11,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="LookupStock" component={SearchView} options={{title: 'Lookup Stock'}}/>
-        <Stack.Screen name="ChooseOptions" component={OptionChainView} options={{title: 'Choose Options'}} />
+        <Stack.Screen name={OptionExpirationViewName} component={OptionExpirationView} options={{title: 'Choose Expiration'}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

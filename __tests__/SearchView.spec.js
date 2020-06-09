@@ -3,6 +3,7 @@ import { render, fireEvent, getByText as localizedGetByText } from '@testing-lib
 import { useNavigation } from '@react-navigation/native'
 import { getQuote } from '../src/stockService'
 import SearchView from '../src/SearchView'
+import { OptionExpirationViewName } from '../src/OptionExpirationView'
 
 jest.mock('../src/stockService')
 jest.mock('@react-navigation/native')
@@ -35,6 +36,6 @@ describe('SearchView', () => {
 
     expect(await findByLabelText('AAPL Apple Inc selected')).toBeTruthy()
 
-    expect(mockNavigation.push).toHaveBeenCalledWith('ChooseOptions', expect.objectContaining({ symbol: symbol }))
+    expect(mockNavigation.push).toHaveBeenCalledWith(OptionExpirationViewName, expect.objectContaining({ symbol: symbol }))
   })
 })

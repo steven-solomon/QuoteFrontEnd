@@ -3,6 +3,7 @@ import { getQuote } from './stockService'
 import { StyleSheet, TextInput, View, Text, FlatList, SafeAreaView } from 'react-native'
 import { TouchableHighlight } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { OptionExpirationViewName } from './OptionExpirationView'
 
 function accessibilityLabel(symbol, description, selected) {
   if (selected)
@@ -48,7 +49,7 @@ export default function SearchView () {
           return (
             <TouchableHighlight onPress={() => {
               setSelected(symbol)
-              navigation.push('ChooseOptions', {symbol: symbol})
+              navigation.push(OptionExpirationViewName, {symbol: symbol})
             }}>
               <Row symbol={symbol} description={description} selected={selected === symbol}/>
             </TouchableHighlight>
