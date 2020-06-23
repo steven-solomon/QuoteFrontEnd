@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { SafeAreaView, View, Text, FlatList, StyleSheet } from 'react-native'
+import { SafeAreaView, View, Text, FlatList, StyleSheet, TouchableHighlight } from 'react-native'
 import { getOptionChain } from './stockService'
 import { formatCurrency } from './formatCurrency'
 
 export const OptionChainViewName = 'OptionChainView'
 
-function Option ({ type, ask, bid }) {
+function Option ({ type, ask, bid, navigation }) {
   const formattedAsk = formatCurrency(ask)
   const formattedBid = formatCurrency(bid)
 
   return (
     <View style={styles.option}>
-      <Text>
-        <Text>Ask:</Text>
-        <Text accessibilityLabel={`${type} ask ${formattedAsk}`}>{formattedAsk}</Text>
-      </Text>
-      <Text>
-        <Text>Bid:</Text>
-        <Text accessibilityLabel={`${type} bid ${formattedBid}`}>{formattedBid}</Text>
-      </Text>
+      <TouchableHighlight onPress={() => navigation.push('Trader')}>
+        <Text>
+          <Text>Ask:</Text>
+          <Text accessibilityLabel={`${type} ask ${formattedAsk}`}>{formattedAsk}</Text>
+        </Text>
+      </TouchableHighlight>
+      <TouchableHighlight onPress={() => navigation.push('Trader')}>
+        <Text>
+          <Text>Bid:</Text>
+          <Text accessibilityLabel={`${type} bid ${formattedBid}`}>{formattedBid}</Text>
+        </Text>
+      </TouchableHighlight>
     </View>
   )
 }
@@ -32,17 +36,17 @@ function Strike({ strike }) {
   )
 }
 
-function Row ({ item: { strike, call, put } }) {
+function Row ({ navigation, item: { strike, call, put } }) {
   return (
     <View style={styles.row}>
-      <Option type={'call'} ask={call.ask} bid={call.bid}/>
+        <Option navigation={navigation} type={'call'} ask={call.ask} bid={call.bid}/>
       <Strike strike={strike} />
       <Option type={'put'} ask={put.ask} bid={put.bid}/>
     </View>
   )
 }
 
-export default function OptionChainView ({ route }) {
+export default function OptionChainView ({ route, navigation }) {
   const [optionChains, setOptionChains] = useState([])
 
   useEffect(() => {
@@ -54,7 +58,7 @@ export default function OptionChainView ({ route }) {
   return <SafeAreaView style={styles.container}>
     <FlatList
       data={optionChains}
-      renderItem={({ item }) => <Row item={item}/>}
+      renderItem={({ item }) => <Row navigation={navigation} item={item}/>}
       keyExtractor={({ strike }) => `${strike}`}
     />
   </SafeAreaView>

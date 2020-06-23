@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { getNodeText, render } from '@testing-library/react-native'
+import { getNodeText, render, fireEvent } from '@testing-library/react-native'
 import OptionChainView from '../src/OptionChainView'
 import { getOptionChain } from '../src/stockService'
 
@@ -29,6 +29,15 @@ describe('OptionChainView', () => {
 
     expect(getNodeText(await findByLabelText('put ask 121.0'))).toEqual('121.0')
     expect(getNodeText(await findByLabelText('put bid 100.0'))).toEqual('100.0')
+  })
+
+  it('contains links to trade options', async () => {
+    const fakeNavigation = { push: jest.fn(), addListener: jest.fn() }
+
+    const { findByLabelText } = render(<OptionChainView navigation={fakeNavigation} route={{ params }}/>)
+
+    fireEvent.press(await findByLabelText('call ask 124.0'))
+    expect(fakeNavigation.push).toHaveBeenCalledWith('Trader')
   })
 
   function optionChain () {
