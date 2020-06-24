@@ -38,12 +38,20 @@ describe('OptionChainView', () => {
 
     fireEvent.press(await findByLabelText('call ask 124.0'))
 
-    expect(fakeNavigation.push).toHaveBeenCalledWith('Trader', {type: 'call', action: 'ask', contractID: 'AAPL200626P00155000'})
+    expect(fakeNavigation.push).toHaveBeenCalledWith('Trader', {
+      type: 'call',
+      action: 'ask',
+      contractID: 'AAPL200626C00155000'
+    })
   })
 
   function optionChain () {
     return [
-      {strike: 150.0, call: {ask: 124.0, bid: 115.0}, put: {ask: 121.0, bid: 100.0}, symbol: 'AAPL200626P00155000'}
+      {
+        strike: 150.0,
+        call: { ask: 124.0, bid: 115.0, symbol: 'AAPL200626C00155000' },
+        put: { ask: 121.0, bid: 100.0, symbol: 'AAPL200626P00155000' }
+      }
     ]
   }
 })

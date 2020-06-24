@@ -36,10 +36,10 @@ function Strike({ strike }) {
   )
 }
 
-function Row ({ navigation, item: { strike, call, put, symbol } }) {
+function Row ({ navigation, item: { strike, call, put } }) {
   return (
     <View style={styles.row}>
-        <Option navigation={navigation} type={'call'} contractID={symbol} ask={call.ask} bid={call.bid}/>
+        <Option navigation={navigation} type={'call'} contractID={call.symbol} ask={call.ask} bid={call.bid}/>
       <Strike strike={strike} />
       <Option type={'put'} ask={put.ask} bid={put.bid}/>
     </View>
