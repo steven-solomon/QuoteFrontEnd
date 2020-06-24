@@ -11,7 +11,7 @@ function Option ({ type, ask, bid, navigation, contractID }) {
 
   return (
     <View style={styles.option}>
-      <TouchableHighlight onPress={() => navigation.push('Trader', {type, contractID, action: 'ask'})}>
+      <TouchableHighlight onPress={() => navigation.push('Trader', {type, contractID, action: 'ask', premium: ask})}>
         <Text>
           <Text>Ask:</Text>
           <Text accessibilityLabel={`${type} ask ${formattedAsk}`}>{formattedAsk}</Text>

@@ -39,6 +39,7 @@ describe('OptionChainView', () => {
     fireEvent.press(await findByLabelText('call ask 124.0'))
 
     expect(fakeNavigation.push).toHaveBeenCalledWith('Trader', {
+      premium: 124.0,
       type: 'call',
       action: 'ask',
       contractID: 'AAPL200626C00155000'

@@ -10,4 +10,18 @@ describe('<TraderView />', () => {
 
     expect(getByLabelText('AAPL')).toBeTruthy()
   })
+
+  it('displays the premium', () => {
+    const params = { contractID: 'AAPL', premium: 100 }
+    const { getByLabelText } = render(<TraderView route={{ params }} />)
+
+    expect(getByLabelText('premium 100')).toBeTruthy()
+  })
+
+  it('displays the type', () => {
+    const params = { contractID: 'AAPL', premium: 100, type: 'call' }
+    const { getByLabelText } = render(<TraderView route={{ params }} />)
+
+    expect(getByLabelText('type call')).toBeTruthy()
+  })
 })
