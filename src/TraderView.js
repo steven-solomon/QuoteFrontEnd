@@ -5,7 +5,7 @@ export const TraderViewName = "Trader"
 
 export default function({ route }) {
   return <View>
-    <Text accessibilityLabel={route.params.symbol}>{route.params.symbol}</Text>
+    <Text accessibilityLabel={route.params.contractID}>{route.params.contractID}</Text>
   </View>
 }
 
