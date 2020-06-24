@@ -5,19 +5,19 @@ import { formatCurrency } from './formatCurrency'
 
 export const OptionChainViewName = 'OptionChainView'
 
-function Option ({ type, ask, bid, navigation }) {
+function Option ({ type, ask, bid, navigation, contractID }) {
   const formattedAsk = formatCurrency(ask)
   const formattedBid = formatCurrency(bid)
 
   return (
     <View style={styles.option}>
-      <TouchableHighlight onPress={() => navigation.push('Trader')}>
+      <TouchableHighlight onPress={() => navigation.push('Trader', {type, contractID, action: 'ask'})}>
         <Text>
           <Text>Ask:</Text>
           <Text accessibilityLabel={`${type} ask ${formattedAsk}`}>{formattedAsk}</Text>
         </Text>
       </TouchableHighlight>
-      <TouchableHighlight onPress={() => navigation.push('Trader')}>
+      <TouchableHighlight onPress={() => navigation.push('Trader', {type, contractID, action: 'bid'})}>
         <Text>
           <Text>Bid:</Text>
           <Text accessibilityLabel={`${type} bid ${formattedBid}`}>{formattedBid}</Text>
@@ -36,10 +36,10 @@ function Strike({ strike }) {
   )
 }
 
-function Row ({ navigation, item: { strike, call, put } }) {
+function Row ({ navigation, item: { strike, call, put, symbol } }) {
   return (
     <View style={styles.row}>
-        <Option navigation={navigation} type={'call'} ask={call.ask} bid={call.bid}/>
+        <Option navigation={navigation} type={'call'} contractID={symbol} ask={call.ask} bid={call.bid}/>
       <Strike strike={strike} />
       <Option type={'put'} ask={put.ask} bid={put.bid}/>
     </View>
