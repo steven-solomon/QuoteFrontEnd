@@ -1,5 +1,5 @@
 import React from 'react'
-import { fireEvent, getByDisplayValue, render } from '@testing-library/react-native'
+import { fireEvent, render } from '@testing-library/react-native'
 
 import TraderView from '../src/TraderView'
 
@@ -25,12 +25,14 @@ describe('<TraderView />', () => {
     expect(getByLabelText('type call')).toBeTruthy()
   })
 
-  it('allows the user to specify the number of contracts', () => {
+  it('allows the user to specify the number of contracts', async () => {
     const params = { contractID: 'AAPL', premium: 100, type: 'call' }
-    const { getByLabelText } = render(<TraderView route={{ params }} />)
+    const { findByDisplayValue, getByLabelText } = render(<TraderView route={{ params }} />)
 
-    fireEvent.changeText(getByLabelText('number of contracts'), '1')
+    expect(await findByDisplayValue('1')).toBeTruthy()
 
-    expect(getByDisplayValue('1')).toBeTruthy()
+    fireEvent.changeText(getByLabelText('number of contracts'), '3')
+
+    expect(await findByDisplayValue('3')).toBeTruthy()
   })
 })
