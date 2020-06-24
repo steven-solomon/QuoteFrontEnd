@@ -35,4 +35,11 @@ describe('<TraderView />', () => {
 
     expect(await findByDisplayValue('3')).toBeTruthy()
   })
+
+  it('calls submitOptionTrade when user presses submit button', async () => {
+    const params = { contractID: 'AAPL', premium: 100, type: 'call' }
+    const { findByDisplayValue, getByLabelText } = render(<TraderView route={{ params }} />)
+
+    fireEvent.press(getByLabelText('Submit'))
+  })
 })
