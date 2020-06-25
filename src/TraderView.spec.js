@@ -1,7 +1,10 @@
 import React from 'react'
 import { fireEvent, render } from '@testing-library/react-native'
+import { submitOrder } from '../src/stockService'
 
 import TraderView from '../src/TraderView'
+
+jest.mock('../src/stockService');
 
 describe('<TraderView />', () => {
   it('displays the ticker contract ID', () => {
@@ -35,11 +38,12 @@ describe('<TraderView />', () => {
 
     expect(await findByDisplayValue('3')).toBeTruthy()
   })
-
+  //
   it('calls submitOptionTrade when user presses submit button', async () => {
     const params = { contractID: 'AAPL', premium: 100, type: 'call' }
-    const { findByDisplayValue, getByLabelText } = render(<TraderView route={{ params }} />)
+    const { getByLabelText } = render(<TraderView route={{ params }} />)
 
     fireEvent.press(getByLabelText('Submit'))
+    expect(submitOrder).toHaveBeenCalledWith({contractID: 'AAPL', premium: 100, type: 'call'});
   })
 })

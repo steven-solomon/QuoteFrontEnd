@@ -27,3 +27,7 @@ function fetchData (endpoint) {
 export function getHistoricalData(symbol) {
   return fetchData(`${baseUrl()}/historical_data?symbol=${symbol}`)
 }
+
+export function submitOrder () {
+
+}
